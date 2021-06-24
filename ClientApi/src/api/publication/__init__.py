@@ -1,5 +1,6 @@
-from .routes.publications import Publication
+from .routes.publications import PublicationCR, PublicationRUD
 
 __all__ = [
-    'Publication'
+    'PublicationCR',
+    'PublicationRUD',
 ]
