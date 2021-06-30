@@ -3,15 +3,17 @@ import { useState } from "react";
 import PublicationCreateModal from "./PublicationCreateModal";
 import PublicationItem from "./PublicationItem";
 
+import Api from '@core/api';
+
 const data = [
   {
-    id: 1,
+    id: -1,
     title: "My summer week",
     message:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum a fugiat magnam distinctio quam ad. Quibusdam illo doloremque officiis perspiciatis dicta quaerat dolorem repellat eius.",
   },
   {
-    id: 2,
+    id: -2,
     title: "My summer week2",
     message:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum a fugiat magnam distinctio quam ad. Quibusdam illo doloremque officiis perspiciatis dicta quaerat dolorem repellat eius.",
@@ -42,17 +44,15 @@ function App() {
 
   const handleAddClick = () => {
     setShow(true);
-    // setPublications(
-    //   old => [
-    //     ...old,
-    //     {
-    //       id: 3,
-    //       title: "My summer week3",
-    //       message:
-    //         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum a fugiat magnam distinctio quam ad. Quibusdam illo doloremque officiis perspiciatis dicta quaerat dolorem repellat eius.",
-    //     }
-    //   ]
-    // )
+  };
+
+  const handleOnCreate = (publication) => {
+    Api.addPublication(publication).then((result) => {
+      setPublications((old) => [...old, result.data]);
+    }).catch((e) => {
+      alert(e);
+    });
+    setShow(false);
   };
 
   return (
@@ -74,10 +74,7 @@ function App() {
       <PublicationCreateModal
         show={show}
         onClose={() => setShow(false)}
-        onCreate={(publication) => {
-          setPublications((old) => [...old, { ...publication, id: 3 }]);
-          setShow(false);
-        }}
+        onCreate={handleOnCreate}
       />
     </div>
   );
