@@ -11,4 +11,4 @@
 ####### Modules without specific version ########
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>#
 flask
-flask-restx
+flask-restx>=0.4

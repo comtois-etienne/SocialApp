@@ -25,21 +25,25 @@ function App() {
   const [show, setShow] = useState(false);
 
   const handleDeletePublication = (id) => {
-    let deleteIndex = -1;
-    for (let index = 0; index < publications.length; index++) {
-      const element = publications[index];
-      if (element.id === id) {
-        deleteIndex = index;
-        break;
+    //* API call
+    Api.removePublication(id).then((result) => {
+      let deleteIndex = -1;
+      for (let index = 0; index < publications.length; index++) {
+        const element = publications[index];
+        if (element.id === id) {
+          deleteIndex = index;
+          break;
+        }
       }
-    }
+  
+      setPublications((old) => {
+        const copy = old.slice();
+        copy.splice(deleteIndex, 1);
+        return copy;
+      });
 
-    setPublications((old) => {
-      console.log("gf");
-      const copy = old.slice();
-      copy.splice(deleteIndex, 1);
-      return copy;
-    });
+      return result;
+    }).catch((e) => alert(e));
   };
 
   const handleAddClick = () => {
